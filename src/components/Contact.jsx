@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { FaEnvelope, FaLocationDot, FaPhone } from "react-icons/fa6";
 
@@ -6,7 +7,29 @@ export default function Contact() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        setStatus("Thank you. Your inquiry is ready to send, and our team will contact you shortly.");
+
+        // Collect form data
+        const formData = new FormData(event.currentTarget);
+        const name = formData.get("name");
+        const phone = formData.get("phone");
+        const requirement = formData.get("requirement");
+        const message = formData.get("message");
+
+        // Build WhatsApp message text
+        const text = `New Fabric Inquiry:%0A
+Name: ${name}%0A
+Phone: ${phone}%0A
+Requirement: ${requirement}%0A
+Message: ${message}`;
+
+        // Your WhatsApp number (must include country code, no spaces or symbols)
+        const whatsappNumber = "917575892575"; // +91 included
+
+        // Open WhatsApp chat with prefilled message
+        window.open(`https://wa.me/${whatsappNumber}?text=${text}`, "_blank");
+
+        // Show confirmation and reset form
+        setStatus("Thank you. Your inquiry has been sent via WhatsApp.");
         event.currentTarget.reset();
     }
 
@@ -22,9 +45,9 @@ export default function Contact() {
                     </p>
 
                     <div className="contact-list">
-                        <a href="tel:+919011411477">
+                        <a href="tel:+917575892575">
                             <FaPhone />
-                            +91 90114 11477
+                            +91 75758 92575
                         </a>
                         <a href="mailto:info@shivanshsilk.com">
                             <FaEnvelope />
